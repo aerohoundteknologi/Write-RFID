@@ -6,6 +6,7 @@
 #define SS_PIN 10
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 String idnum_str;
+bool ready = false;
 
 // put function declarations here:
 
@@ -28,10 +29,16 @@ void loop()
     idnum_str = Serial.readString();
     idnum_str.trim();
   }
+  if (!ready)
+  {
+    Serial.println("ready");
+    ready = true;
+  }
   if (idnum_str == "")
   {
     return;
   }
+
   doWrite(string_toUint64(idnum_str));
 
   delay(300);
@@ -107,7 +114,12 @@ void doWrite(uint64_t dataToWrite)
     return;
   }
   else
+  {
     Serial.println("success");
+    // cleanup
+    ready = false;
+    idnum_str = "";
+  }
 
   mfrc522.PICC_HaltA();      // Halt PICC
   mfrc522.PCD_StopCrypto1(); // Stop encryption on PCD
