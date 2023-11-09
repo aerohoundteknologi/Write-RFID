@@ -95,7 +95,7 @@ void doWrite(uint64_t dataToWrite)
   status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, block, &key, &(mfrc522.uid));
   if (status != MFRC522::STATUS_OK)
   {
-    Serial.println(F("{\"status\":\"failed\"}"));
+    Serial.println("failed");
     return;
   }
   else
@@ -103,11 +103,11 @@ void doWrite(uint64_t dataToWrite)
 
   if (status != MFRC522::STATUS_OK)
   {
-    Serial.println(F("{\"status\":\"failed\"}"));
+    Serial.println("failed");
     return;
   }
   else
-    Serial.println(F("{\"status\":\"success\"}"));
+    Serial.println("success");
 
   mfrc522.PICC_HaltA();      // Halt PICC
   mfrc522.PCD_StopCrypto1(); // Stop encryption on PCD
