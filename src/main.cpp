@@ -65,7 +65,7 @@ uint64_t string_toUint64(String strint)
   for (unsigned int i = 0; i < strint.length(); i++)
   {
     if (!isDigit(strint[i]))
-      break;
+      return 0;
     result = result * 10 + (strint[i] - '0');
   }
   return result;
